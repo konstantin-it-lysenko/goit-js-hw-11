@@ -1,6 +1,26 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
 
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #edf0ff;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #252e63;
+  border-radius: 20px;
+  border: 2px solid #fafafa;
+}
+
 ul,
 li {
   list-style: none;
+}
+
+.is-hidden {
+  display: none;
+  visibility: hidden;
+  pointer-events: none;
 }
