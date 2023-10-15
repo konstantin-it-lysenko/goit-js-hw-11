@@ -22,15 +22,16 @@
 }
 
 .form-btn {
-  padding: 6px 16px;
+  padding: 6px 24px;
   border: none;
-  border-radius: 20px;
+  border-radius: 18px;
   background-color: #fafafa;
   color: #202020;
   line-height: 1.5;
-  font-weight: 500;
+  font-weight: 600;
   outline: none;
   cursor: pointer;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
@@ -55,4 +56,25 @@
 img {
   max-width: 100%;
   object-fit: contain;
+}
+
+.load-more {
+  display: block;
+  margin: 24px auto;
+  padding: 8px 24px;
+  border: none;
+  border-radius: 18px;
+  background-color: #252e63;
+  color: #fafafa;
+  line-height: 1.5;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.load-more:is(:hover, :focus) {
+  background-color: #3d8eff;
+  color: #fafafa;
 }
