@@ -59,7 +59,6 @@ async function submitBtnHandler(event) {
 async function loadMoreBtnHandler() {
   page += 1;
 
-
   try {
     const queryData = await getQueryData(searchQuery, page);
 
@@ -70,7 +69,7 @@ async function loadMoreBtnHandler() {
     }
 
     gallery = new SimpleLightbox('.gallery a');
-  } catch { failureResponse }
+  } catch { failureResponse() }
 }
 
 function failureResponse() {
