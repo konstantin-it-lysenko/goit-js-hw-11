@@ -41,4 +41,18 @@
 
 .gallery {
   padding: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.photo-card {
+  max-width: 460px;
+}
+
+img {
+  max-width: 100%;
+  object-fit: contain;
 }
