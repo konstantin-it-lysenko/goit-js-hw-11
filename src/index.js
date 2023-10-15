@@ -1,5 +1,7 @@
 import axios from "axios";
 import Notiflix from "notiflix";
+import SimpleLightbox from "simplelightbox";
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const formEl = document.getElementById('search-form');
 const galleryEl = document.querySelector('.gallery');
@@ -8,9 +10,11 @@ const API_KEY = '39983017-ab6cfdfc6bbf03f7c61f72b59';
 
 formEl.addEventListener('submit', submitBtnHandler);
 
-function submitBtnHandler(event) {
+async function submitBtnHandler(event) {
   event.preventDefault();
+  const form = event.currentTarget;
   const searchQuery = event.currentTarget.elements.searchQuery.value;
+  let page = 1;
 
   if (!searchQuery.trim()) {
     return Notiflix.Notify.warning('Please enter your request', {
@@ -19,48 +23,67 @@ function submitBtnHandler(event) {
     })
   }
 
+  try {
+    const queryData = await getQueryData(searchQuery, page);
+    console.log(queryData.hits);
+    galleryEl.innerHTML = createGalleryMarkup(queryData.hits)
+  } catch {
+    Notiflix.Notify.failure(
+      'Sorry, there are no images matching your search query. Please try again.'
+    );
+  }
+
+  form.reset();
+
+  let gallery = new SimpleLightbox('.gallery a');
+}
+
+async function getQueryData(searchQuery, page = 1) {
   const params = new URLSearchParams({
     key: API_KEY,
     q: searchQuery,
     image_type: 'photo',
     orientation: 'horizontal',
-    safesearch: true
-  })
+    safesearch: true,
+    per_page: 40,
+    page,
+  });
 
-  const response = axios.get(`${BASE_URL}?${params}`)
-    .then(data => {
-      createMarkup((data.data.hits))
-      Notiflix.Notify.success('Success', {
-        distance: '20px',
-        position: "right-bottom"
-      })
-    }
-    ).catch(error => {
-      Notiflix.Notify.failure(`Oops! Something went wrong ${error}`, {
-        position: "right-top"
-      })
-    });
+  const response = await axios.get(`${BASE_URL}?${params}`);
 
+  return response.data;
 }
 
-function createMarkup(arr) {
-  galleryEl.innerHTML = arr.map(obj => {
-    return `<div class="photo-card">
-    <img src="${obj.webformatURL}" alt="${obj.tags}" loading="lazy" />
+function createGalleryMarkup(queryData) {
+  return queryData.map(createMarkup).join('');
+}
+
+function createMarkup({
+  webformatURL,
+  largeImageURL,
+  tags,
+  likes,
+  views,
+  comments,
+  downloads,
+}) {
+  return `<div class="photo-card">
+    <a href="${largeImageURL}">
+      <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+    </a>
     <div class="info">
       <p class="info-item">
-         <b>Likes:</b>  ${obj.likes}
+         <b>Likes:</b>  ${likes}
       </p>
       <p class="info-item">
-        <b>Views:</b> ${obj.views}
+        <b>Views:</b> ${views}
       </p>
       <p class="info-item">
-        <b>Comments:</b> ${obj.comments}
+        <b>Comments:</b> ${comments}
       </p>
       <p class="info-item">
-        <b>Downloads:</b> ${obj.downloads}
+        <b>Downloads:</b> ${downloads}
       </p>
     </div>
   </div>`
-  }).join();
-}
+};
