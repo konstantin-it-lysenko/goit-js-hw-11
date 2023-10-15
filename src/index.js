@@ -32,27 +32,43 @@ async function submitBtnHandler(event) {
   try {
     const queryData = await getQueryData(searchQuery);
 
+    if (queryData.hits.length > 0) {
+      Notiflix.Notify.success(`You have received ${queryData.totalHits} images`, {
+        distance: '90px',
+        position: "center-top"
+      })
+    }
+
     refs.galleryEl.innerHTML = createGalleryMarkup(queryData.hits);
 
     if (queryData.hits.length === 0) {
-      failureResponse()
+      failureResponse();
+    };
+    if (queryData.hits.length < 40) {
       refs.loadMoreBtn.classList.add('is-hidden');
     } else {
       refs.loadMoreBtn.classList.remove('is-hidden');
-    }
-  } catch { failureResponse }
+    };
+  } catch { failureResponse() }
 
   form.reset();
 
-  gallery = new SimpleLightbox('.gallery a');
+  let gallery = new SimpleLightbox('.gallery a');
 }
 
 async function loadMoreBtnHandler() {
   page += 1;
 
+
   try {
     const queryData = await getQueryData(searchQuery, page);
+
     refs.galleryEl.insertAdjacentHTML('beforeend', createGalleryMarkup(queryData.hits));
+
+    if (page * queryData.hits.length >= queryData.totalHits) {
+      refs.loadMoreBtn.classList.add('is-hidden');
+    }
+
     gallery = new SimpleLightbox('.gallery a');
   } catch { failureResponse }
 }
