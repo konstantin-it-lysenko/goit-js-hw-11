@@ -41,7 +41,7 @@ async function submitBtnHandler(event) {
         distance: '90px',
         position: "center-top"
       })
-    }
+    };
 
     if (queryData.hits.length < 40) {
       refs.loadMoreBtn.classList.add('is-hidden');
@@ -51,7 +51,6 @@ async function submitBtnHandler(event) {
 
     refs.galleryEl.innerHTML = createGalleryMarkup(queryData.hits);
     let gallery = new SimpleLightbox('.gallery a');
-
   } catch { failureResponse() }
 
 }
@@ -68,7 +67,7 @@ async function loadMoreBtnHandler() {
       refs.loadMoreBtn.classList.add('is-hidden');
     }
 
-    gallery = new SimpleLightbox('.gallery a');
+    let gallery = new SimpleLightbox('.gallery a');
   } catch { failureResponse() }
 }
 
