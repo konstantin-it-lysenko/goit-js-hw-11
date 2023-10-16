@@ -50,7 +50,7 @@ async function submitBtnHandler(event) {
     };
 
     refs.galleryEl.innerHTML = createGalleryMarkup(queryData.hits);
-    let gallery = new SimpleLightbox('.gallery a');
+    let gallery = new SimpleLightbox('.gallery a', { captionsData: 'alt' });
   } catch { failureResponse() }
 
 }
