@@ -64,7 +64,7 @@ async function loadMoreBtnHandler() {
 
     refs.galleryEl.insertAdjacentHTML('beforeend', createGalleryMarkup(queryData.hits));
 
-    if (page * queryData.hits.length >= queryData.totalHits) {
+    if (page * 40 >= queryData.totalHits) {
       refs.loadMoreBtn.classList.add('is-hidden');
     }
 
