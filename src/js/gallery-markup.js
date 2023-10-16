@@ -1,20 +1,19 @@
 export default function createGalleryMarkup(queryData) {
-    return queryData.map(createMarkup).join('');
+  return queryData.map(createMarkup).join('');
 }
 
 function createMarkup({
-    webformatURL,
-    largeImageURL,
-    tags,
-    likes,
-    views,
-    comments,
-    downloads,
+  webformatURL,
+  largeImageURL,
+  tags,
+  likes,
+  views,
+  comments,
+  downloads,
 }) {
-    return `<div class="photo-card">
+  return `<div class="photo-card">
     <a href="${largeImageURL}">
       <img src="${webformatURL}" alt="${tags}" loading="lazy" />
-    </a>
     <div class="info">
       <p class="info-item">
          <b>Likes:</b>  ${likes}
@@ -29,5 +28,6 @@ function createMarkup({
         <b>Downloads:</b> ${downloads}
       </p>
     </div>
+    </a>
   </div>`
 };
