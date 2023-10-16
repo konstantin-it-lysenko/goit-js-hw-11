@@ -32,6 +32,10 @@ async function submitBtnHandler(event) {
   try {
     const queryData = await getQueryData(searchQuery, page);
 
+    form.reset();
+    if (queryData.hits.length === 0) {
+      return failureResponse();
+    };
     if (queryData.hits.length > 0) {
       Notiflix.Notify.success(`You have received ${queryData.totalHits} images`, {
         distance: '90px',
@@ -39,21 +43,17 @@ async function submitBtnHandler(event) {
       })
     }
 
-    refs.galleryEl.innerHTML = createGalleryMarkup(queryData.hits);
-
-    if (queryData.hits.length === 0) {
-      failureResponse();
-    };
     if (queryData.hits.length < 40) {
       refs.loadMoreBtn.classList.add('is-hidden');
     } else {
       refs.loadMoreBtn.classList.remove('is-hidden');
     };
+
+    refs.galleryEl.innerHTML = createGalleryMarkup(queryData.hits);
+    let gallery = new SimpleLightbox('.gallery a');
+
   } catch { failureResponse() }
 
-  form.reset();
-
-  let gallery = new SimpleLightbox('.gallery a');
 }
 
 async function loadMoreBtnHandler() {
