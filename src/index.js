@@ -30,7 +30,7 @@ async function submitBtnHandler(event) {
   }
 
   try {
-    const queryData = await getQueryData(searchQuery);
+    const queryData = await getQueryData(searchQuery, page);
 
     if (queryData.hits.length > 0) {
       Notiflix.Notify.success(`You have received ${queryData.totalHits} images`, {
