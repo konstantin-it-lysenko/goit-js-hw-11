@@ -12,6 +12,7 @@ const refs = {
 }
 let searchQuery = '';
 let page = 1;
+let gallery;
 
 refs.formEl.addEventListener('submit', submitBtnHandler);
 refs.loadMoreBtn.addEventListener('click', loadMoreBtnHandler);
@@ -33,7 +34,7 @@ async function submitBtnHandler(event) {
     const queryData = await getQueryData(searchQuery, page);
 
     form.reset();
-    if (queryData.hits.length === 0) {
+    if (!queryData || queryData.hits.length === 0) {
       return failureResponse();
     };
     if (queryData.hits.length > 0) {
@@ -50,7 +51,7 @@ async function submitBtnHandler(event) {
     };
 
     refs.galleryEl.innerHTML = createGalleryMarkup(queryData.hits);
-    let gallery = new SimpleLightbox('.gallery a', { captionsData: 'alt' });
+    gallery = new SimpleLightbox('.gallery a', { captionsData: 'alt' });
   } catch { failureResponse() }
 
 }
@@ -67,7 +68,7 @@ async function loadMoreBtnHandler() {
       refs.loadMoreBtn.classList.add('is-hidden');
     }
 
-    let gallery = new SimpleLightbox('.gallery a');
+    gallery.refresh();
   } catch { failureResponse() }
 }
 
