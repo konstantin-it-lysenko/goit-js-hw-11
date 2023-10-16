@@ -7,7 +7,7 @@
   justify-content: center;
   font-family: monospace;
   font-size: 16px;
-  background-color: #252e63;
+  background-color: #444;
   color: #202020;
 }
 
@@ -15,7 +15,8 @@
   padding: 6px 16px;
   border: none;
   border-radius: 20px;
-  background-color: #fafafa;
+  background-color: #333;
+  color: #fafafa;
   line-height: 1.5;
   font-weight: 500;
   outline: none;
@@ -41,21 +42,39 @@
 }
 
 .gallery {
-  padding: 40px;
+  padding: 40px 100px 10px;
   display: flex;
   flex-wrap: wrap;
-  gap: 40px;
-  align-items: baseline;
+  align-items: center;
   justify-content: center;
+  gap: 10px;
 }
 
 .photo-card {
-  max-width: 460px;
+  max-width: 400px;
+  background-color: #444;
+  border: 1px solid #555;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
 }
 
 img {
   max-width: 100%;
-  object-fit: contain;
+  height: auto;
+  display: block;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.info-item {
+  margin: 5px 0;
+  font-size: 16px;
 }
 
 .load-more {
@@ -64,10 +83,10 @@ img {
   padding: 8px 24px;
   border: none;
   border-radius: 18px;
-  background-color: #252e63;
-  color: #fafafa;
+  background-color: #fafafa;
+  color: #444;
   line-height: 1.5;
-  font-weight: 500;
+  font-weight: 600;
   outline: none;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
@@ -77,4 +96,26 @@ img {
 .load-more:is(:hover, :focus) {
   background-color: #3d8eff;
   color: #fafafa;
+}
+
+@media screen and (max-width: 1080px) {
+  .search-form {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .gallery {
+    padding: 30px 50px 10px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .search-form {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .gallery {
+    padding: 20px 20px 10px;
+  }
 }
